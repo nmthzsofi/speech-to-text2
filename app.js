@@ -34,7 +34,6 @@ function startRecording(questionNumber) {
 
             mediaRecorder.addEventListener("dataavailable", event => {
                 audioChunks.push(event.data);
-                console.log('pushed chunk: ', event.data);
             });
 
             mediaRecorder.addEventListener("stop", () => {
