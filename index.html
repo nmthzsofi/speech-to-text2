@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Forward College Quiz</title>
+</head>
+<body>
+    <div id="main-container">
+
+        <div id="header">
+            <img id="banner" src="banner.jpg" alt="Forward College Banner" />
+        </div>
+<!--
+        <div id="left-menu">
+            <ul>
+                <li onclick="showQuestion(10)">Introduction</li>
+                <li onclick="showQuestion(1)">Question 1</li>
+                <li onclick="showQuestion(2)">Question 2</li>
+                <li onclick="showQuestion(3)">Question 3</li>
+                <li onclick="showQuestion(4)">Question 4</li>
+            </ul>
+        </div>  
+-->
+        <div id="question-10" class="question-container">
+            <h1>Introduction</h1>
+            <p id="introduction">Thank you for taking the time to answer these questions today. We are here to understand your decision-making process regarding your decision to decline our offer at Forward College. There are no right or wrong answers—we are simply interested in hearing about your experience and perspective. Your insights will help us improve and shape the experience for future students. The questions will take approximately 20 minutes, and everything you share will remain confidential.
+            </p>
+        </div>   
+
+        <div id="question-1" class="question-container">
+            <h1>Question 1:</h1>
+            <p>Why did you reject the offer?</p>
+            <button onclick="startRecording(1)">Start recording</button>
+            <button onclick="stopRecording()">End recording</button>
+            <button onclick="clearAnswer(1)">Clear</button>
+            <p id="result-1"></p> 
+        </div>  
+
+        <div id="question-2" class="question-container">
+            <h1>Question 2:</h1>
+            <p>Whnere else did you apply?</p>
+            <button onclick="startRecording(2)">Start recording</button>
+            <button onclick="stopRecording()">End recording</button>
+            <button onclick="clearAnswer(2)">Clear</button>
+            <p id="result-2"></p> 
+        </div> 
+
+        <div id="question-3" class="question-container">
+            <h1>Question 3:</h1>
+            <p>When did you graduate?</p>
+            <button onclick="startRecording(3)">Start recording</button>
+            <button onclick="stopRecording()">End recording</button>
+            <button onclick="clearAnswer(3)">Clear</button>
+            <p id="result-3"></p> 
+        </div> 
+
+        <div id="question-4" class="question-container">
+            <h1>Question 4:</h1>
+            <p>Where are you from?</p>
+            <button onclick="startRecording(4)">Start recording</button>
+            <button onclick="stopRecording()">End recording</button>
+            <button onclick="clearAnswer(4)">Clear</button>
+            <p id="result-4"></p> 
+            <div id="submit-div"><button id="submit-btn" onclick="saveAllAnswers()">Submit</button></div>
+        </div> 
+
+
+    </div>
+
+    <script src="app.js"></script> <!-- Itt kapcsolódik a JavaScript fájl -->
+</body>
+</html>
