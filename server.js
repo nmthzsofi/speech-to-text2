@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname)));
 
 // Initialize Google Cloud Speech-to-Text
 const speechClient = new SpeechClient({
-    keyFilename: process.enc.KEY
+    keyFilename: process.env.KEY
 });
 
 // Handle audio file upload and transcription
