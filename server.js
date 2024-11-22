@@ -12,8 +12,10 @@ const upload = multer({ dest: 'uploads/' });
 app.use(express.static(path.join(__dirname)));
 
 // Initialize Google Cloud Speech-to-Text
+const credentials = JSON.parse(process.env.KEY);
+
 const speechClient = new SpeechClient({
-    keyFilename: process.env.KEY
+    credentials
 });
 
 // Handle audio file upload and transcription
