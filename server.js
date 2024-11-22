@@ -57,18 +57,17 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
             const transcript = response[0].results
                 .map(result => result.alternatives[0].transcript)
                 .join('\n');
-                console.log("Transcipt:");
+                console.log("Transcipt: ");
                 console.log(transcript);
             
             res.json({ transcript });
+            console.log("Third step: transcribed");
         })
         .catch(err => {
             console.log("Flag of Er");
             console.error("Error during speech recognition:", err);
             res.status(500).json({ error: 'Error processing audio file', details: err });
         });
-
-    console.log("Third step: transcribed");
 });
 
 // Handle saving all answers
