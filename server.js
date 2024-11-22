@@ -32,6 +32,8 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
     };
 
     console.log("Second step: loaded in");
+    console.log("Request object:", request);
+    console.log("Uploaded file path:", req.file.path);
 
     speechClient.recognize(request)
         .then(response => {
@@ -44,6 +46,7 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
             res.json({ transcript });
         })
         .catch(err => {
+            console.error("Error during speech recognition:", err);
             res.status(500).json({ error: 'Error processing audio file', details: err });
         });
 
