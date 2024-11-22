@@ -54,6 +54,7 @@ function startRecording(questionNumber) {
 function sendToServer(audioBlob, questionNumber) {
     const formData = new FormData();
     formData.append('file', audioBlob, 'recording.webm'); 
+    console.log(process.env.KEY);
 
     fetch('/upload-audio', {
         method: 'POST',
