@@ -36,6 +36,20 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
     console.log("Uploaded file path:", req.file.path);
     console.log("SpeechClient initialized:", speechClient !== undefined);
 
+    fs.stat(filePath, (err, stats) => {
+    if (err) {
+        console.error('File path error:', err.message);
+    } else if (stats.isFile()) {
+        console.log('Path points to a valid file:', filePath);
+    } else if (stats.isDirectory()) {
+        console.log('Path points to a directory:', filePath);
+    } else {
+        console.error('Path is neither a file nor a directory:', filePath);
+    }
+});
+
+    
+
     speechClient.recognize(request)
         .then(response => {
             const transcript = response[0].results
