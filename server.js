@@ -34,6 +34,7 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
     console.log("Second step: loaded in");
     console.log("Request object:", request);
     console.log("Uploaded file path:", req.file.path);
+    console.log("SpeechClient initialized:", speechClient !== undefined);
 
     speechClient.recognize(request)
         .then(response => {
