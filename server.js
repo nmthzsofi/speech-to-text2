@@ -46,7 +46,6 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
         });
 
     console.log("Third step: transcribed");
-    console.log(res.json());
 });
 
 // Handle saving all answers
