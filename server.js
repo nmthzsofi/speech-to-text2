@@ -19,7 +19,6 @@ const speechClient = new SpeechClient({
 // Handle audio file upload and transcription
 app.post('/upload-audio', upload.single('file'), (req, res) => {
     console.log("First step: communicate");
-    console.log(process.env.KEY);
     const filePath = req.file.path;
 
     const audio = { content: fs.readFileSync(filePath).toString('base64') };
@@ -32,6 +31,8 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
         },
     };
 
+    console.log("Second step: loaded in");
+
     speechClient.recognize(request)
         .then(response => {
             const transcript = response[0].results
@@ -43,6 +44,9 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
         .catch(err => {
             res.status(500).json({ error: 'Error processing audio file', details: err });
         });
+
+    console.log("Third step: transcribed");
+    console.log(res.json());
 });
 
 // Handle saving all answers
