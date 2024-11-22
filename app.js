@@ -63,6 +63,7 @@ function sendToServer(audioBlob, questionNumber) {
     .then(response => response.json())
     .then(data => {
         const transcript = data.transcript || 'No transcript available';
+        console.log("Data to be output: ", transcirpt;
         collectedAnswers[questionNumber] = transcript;
         document.getElementById(`result-${questionNumber}`).innerText = transcript;
     })
