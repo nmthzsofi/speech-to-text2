@@ -81,9 +81,9 @@ const port = process.env.PORT || 3000;
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
-console.log("Server starting...);
-console.log(${port});
+console.log("Server starting...");
+console.log(port);
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });
-console.log("Server set!);
+console.log("Server set!");
