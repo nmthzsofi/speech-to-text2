@@ -19,6 +19,7 @@ const speechClient = new SpeechClient({
 // Handle audio file upload and transcription
 app.post('/upload-audio', upload.single('file'), (req, res) => {
     console.log("First step: communicate");
+    console.log(process.env.KEY);
     const filePath = req.file.path;
 
     const audio = { content: fs.readFileSync(filePath).toString('base64') };
