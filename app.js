@@ -77,6 +77,9 @@ function sendToServer(audioBlob, questionNumber) {
 function stopRecording() {
     if (mediaRecorder && mediaRecorder.state !== "inactive") {
         mediaRecorder.stop();
+        const tracks = mediaRecorder.stream.getTracks(); // Get all tracks from the stream
+        tracks.forEach(track => track.stop()); // Stop each track
+        console.log('Microphone stream stopped.');
         console.log('Recording stopped');
     }
 }
