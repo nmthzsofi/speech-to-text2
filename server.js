@@ -101,7 +101,7 @@ console.log("Starting Hubspot proces--------------------");
     }
     
 //TRYING HUBSPORT CONNECTION
-    /*
+    
 console.log("Stop 2: creating dataset");
 hubspotClient.crm.contacts.basicApi.create(contactData)
   .then(response => {
@@ -110,7 +110,7 @@ hubspotClient.crm.contacts.basicApi.create(contactData)
   .catch(error => {
     console.error('Error creating contact:', error);
   });
-*/
+
 console.log("Stop 3: Sending file back");
 
 
