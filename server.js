@@ -80,24 +80,22 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
 // Handle saving all answers
 app.post('/save-all-answers', (req, res) => {
     const answers = req.body.answers;
-    const fileName = `session_${Date.now()}.txt`;
-    const outputPath = path.join(__dirname, 'transcripts', fileName);
 
-    let fileContent = '';
-    for (const [question, answer] of Object.entries(answers)) {
-        fileContent += `Question ${question}:\n${answer}\n\n`;
-    }
-//TRYING HUBSPORT CONNECTION
+// Dynamically populate the properties for contactData
     const contactData = {
-  properties: {
-    email: 'user@example.com',
-    'Question 1': 'Answer to question 1',
-    'Question 2': 'Answer to question 2',
-    'Question 3': 'Answer to question 3',
-    'Question 4': 'Answer to question 4',
-  },
-};
+        properties: {
+            email: 'user@example.com', // Include the email or any unique identifier
+        },
+    };
 
+    // Loop through the answers object and populate the contactData properties
+    for (const [questionNumber, answer] of Object.entries(answers)) {
+        // Dynamically add the question and answer as key-value pairs in the properties object
+        contactData.properties[`Question ${questionNumber}`] = answer;
+    }
+    
+//TRYING HUBSPORT CONNECTION
+    
 hubspotClient.crm.contacts.basicApi.create(contactData)
   .then(response => {
     console.log('Contact created:', response.body);
