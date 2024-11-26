@@ -88,7 +88,7 @@ console.log("Starting Hubspot proces--------------------");
 // Dynamically populate the properties for contactData
     const contactData = {
         properties: {
-            email: 'user@example.com', // Include the email or any unique identifier
+            email: req.body.email, // Include the email or any unique identifier
         },
     };
     console.log("Stop 1: creating package for Hubspot");
