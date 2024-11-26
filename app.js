@@ -89,7 +89,14 @@ function saveAllAnswers() {
     //control for email address
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("email-input").value)) {
     alert('Invalid email format!');
+    //scrool back to view
+         document.getElementById("email-input").scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //Add focus to the email field
+       document.getElementById("email-input").focus();
+
     return res.status(400).json({ error: 'Invalid email format' });
+
+    
 } else {
 
     
