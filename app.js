@@ -86,6 +86,13 @@ function stopRecording() {
 
 // Save all answers
 function saveAllAnswers() {
+    //control for email address
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("email-input").value)) {
+    alert('Invalid email format!');
+    return res.status(400).json({ error: 'Invalid email format' });
+} else {
+
+    
     fetch('/save-all-answers', {
         method: 'POST',
         headers: {
@@ -106,6 +113,8 @@ function saveAllAnswers() {
         alert('Failed to save answers.');
     });
 }
+}
+
 function clearAnswer(questionNumber) {
     const resultElement = document.getElementById(`result-${questionNumber}`);
     resultElement.innerText = ''; // Clear the result for the specified question
