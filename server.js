@@ -21,11 +21,11 @@ const speechClient = new SpeechClient({
 
 //initialize hubspot connection
 const hubCredentials = JSON.parse(process.env.HUBSPOT_TOKEN);
-console.log(hubCredentials);
-/*const hubspotClient = new hubspot.Client({
+
+const hubspotClient = new hubspot.Client({
     hubCredentials
 });
-*/
+
 
 
 // Handle audio file upload and transcription
@@ -82,7 +82,7 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
 
 // Handle saving all answers
 app.post('/save-all-answers', (req, res) => {
-/*
+
 console.log("Starting Hubspot proces--------------------");
     const answers = req.body.answers;
 
@@ -112,7 +112,7 @@ hubspotClient.crm.contacts.basicApi.create(contactData)
   });
 
 console.log("Stop 3: Sending file back");
-*/
+
 
 res.json({ file: 'Succeeded'});
 
