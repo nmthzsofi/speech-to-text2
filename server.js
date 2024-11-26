@@ -19,7 +19,6 @@ const speechClient = new SpeechClient({
     credentials
 });
 
-console.log("HUBKEY:", process.env.HUBSPOT_TOKEN);
 //initialize hubspot connection
 /*
 const hubspotClient = new hubspot.Client({
@@ -132,5 +131,6 @@ const port = process.env.PORT || 3000;
 console.log(port);
 app.listen(port, () => {
     console.log('Server started on port!');
+    console.log("HUBKEY:", process.env.HUBSPOT_TOKEN);
 });
 console.log("server started");
