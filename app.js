@@ -91,7 +91,10 @@ function saveAllAnswers() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ answers: collectedAnswers })
+        body: JSON.stringify({ 
+            email: document.getElementById("email-input").value,
+            answers: collectedAnswers 
+        })
     })
     .then(response => response.json())
     .then(data => {
