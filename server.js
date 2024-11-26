@@ -21,10 +21,11 @@ const speechClient = new SpeechClient({
 
 //initialize hubspot connection
 const hubCredentials = JSON.parse(process.env.HUBSPOT_TOKEN);
-const hubspotClient = new hubspot.Client({
+console.log(hubCredentials);
+/*const hubspotClient = new hubspot.Client({
     hubCredentials
 });
-
+*/
 
 
 // Handle audio file upload and transcription
