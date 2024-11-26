@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const { SpeechClient } = require('@google-cloud/speech');
+const hubSpot = require ('@hubspot/api-client');
 const fs = require('fs');
 const path = require('path');
 
@@ -17,6 +18,12 @@ const credentials = JSON.parse(process.env.KEY);
 const speechClient = new SpeechClient({
     credentials
 });
+
+//initialize hubspot connection
+const hubspotClient = new hubspot.Client({
+    accessToken: process.env.HUBSPOT_TOKEN,
+});
+
 
 // Handle audio file upload and transcription
 app.post('/upload-audio', upload.single('file'), (req, res) => {
@@ -80,13 +87,36 @@ app.post('/save-all-answers', (req, res) => {
     for (const [question, answer] of Object.entries(answers)) {
         fileContent += `Question ${question}:\n${answer}\n\n`;
     }
+//TRYING HUBSPORT CONNECTION
+    const contactData = {
+  properties: {
+    email: 'user@example.com',
+    'Question 1': 'Answer to question 1',
+    'Question 2': 'Answer to question 2',
+    'Question 3': 'Answer to question 3',
+    'Question 4': 'Answer to question 4',
+  },
+};
 
+hubspotClient.crm.contacts.basicApi.create(contactData)
+  .then(response => {
+    console.log('Contact created:', response.body);
+  })
+  .catch(error => {
+    console.error('Error creating contact:', error);
+  });
+
+//----------
     fs.writeFile(outputPath, fileContent, err => {
         if (err) {
             return res.status(500).json({ error: 'Error saving file' });
         }
         res.json({ file: fileName });
     });
+    
+
+
+
 });
 
 console.log("starting server...");
