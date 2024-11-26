@@ -79,6 +79,7 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
 
 // Handle saving all answers
 app.post('/save-all-answers', (req, res) => {
+console.log("Starting Hubspot proces--------------------");
     const answers = req.body.answers;
 
 // Dynamically populate the properties for contactData
@@ -87,15 +88,17 @@ app.post('/save-all-answers', (req, res) => {
             email: 'user@example.com', // Include the email or any unique identifier
         },
     };
-
+    console.log("Stop 1: creating package for Hubspot");
     // Loop through the answers object and populate the contactData properties
     for (const [questionNumber, answer] of Object.entries(answers)) {
         // Dynamically add the question and answer as key-value pairs in the properties object
+        console.log("Question: ", questionNumber);
+        console.log("Answer: ", answer);
         contactData.properties[`Question ${questionNumber}`] = answer;
     }
     
 //TRYING HUBSPORT CONNECTION
-    
+console.log("Stop 2: creating dataset");
 hubspotClient.crm.contacts.basicApi.create(contactData)
   .then(response => {
     console.log('Contact created:', response.body);
@@ -103,6 +106,9 @@ hubspotClient.crm.contacts.basicApi.create(contactData)
   .catch(error => {
     console.error('Error creating contact:', error);
   });
+
+console.log("Stop 3: Sending file back");
+res.json({ file: 'Succeeded'});
 
 //----------
     /*fs.writeFile(outputPath, fileContent, err => {
