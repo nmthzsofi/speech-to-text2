@@ -20,9 +20,9 @@ const speechClient = new SpeechClient({
 });
 
 //initialize hubspot connection
-console.log(accessToken: process.env.HUBSPOT_TOKEN);
+const hubCredentials = JSON.parse(process.env.HUBSPOT_TOKEN);
 const hubspotClient = new hubspot.Client({
-    accessToken: process.env.HUBSPOT_TOKEN,
+    hubCredentials
 });
 
 
