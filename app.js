@@ -86,7 +86,6 @@ function saveAllAnswers() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 
-            email: document.getElementById("email-input").value,
             answers: collectedAnswers 
         })
     })
