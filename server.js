@@ -83,6 +83,7 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
 app.post('/save-all-answers', (req, res) => {
 
 console.log("Starting Hubspot proces--------------------");
+console.log("Email adress: ", req.body.email);
     const answers = req.body.answers;
 
 // Dynamically populate the properties for contactData
