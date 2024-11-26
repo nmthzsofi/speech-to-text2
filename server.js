@@ -105,15 +105,13 @@ hubspotClient.crm.contacts.basicApi.create(contactData)
   });
 
 //----------
-    fs.writeFile(outputPath, fileContent, err => {
+    /*fs.writeFile(outputPath, fileContent, err => {
         if (err) {
             return res.status(500).json({ error: 'Error saving file' });
         }
         res.json({ file: fileName });
-    });
+    });*/
     
-
-
 
 });
 
