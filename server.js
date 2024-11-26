@@ -20,11 +20,24 @@ const speechClient = new SpeechClient({
 });
 
 //initialize hubspot connection
-/*
+
 const hubspotClient = new hubspot.Client({
     accessToken: process.env.HUBSPOT_TOKEN,
 });
-*/
+
+app.get('/test-hubspot-token', async (req, res) => {
+    try {
+        // Make a simple API request to HubSpot
+        const response = await hubspotClient.crm.contacts.basicApi.getPage(1); // Fetch first page of contacts
+        console.log('HubSpot communication successful:', response.body);
+        res.status(200).json({ message: 'HubSpot token is valid!', data: response.body });
+    } catch (error) {
+        console.error('HubSpot communication failed:', error.message);
+        res.status(500).json({ message: 'HubSpot token is invalid or communication failed', error: error.message });
+    }
+});
+
+
 
 // Handle audio file upload and transcription
 app.post('/upload-audio', upload.single('file'), (req, res) => {
