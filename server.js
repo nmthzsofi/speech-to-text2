@@ -129,7 +129,7 @@ console.log("Email adress: ", req.body.email);
         console.log("Question: ", questionNumber);
         console.log("Answer: ", answer);
         contactData.properties[`question_${questionNumber}`] = answer;
-    
+    }
     
 //TRYING HUBSPORT CONNECTION
 console.log("--------------------------------------Data to be sent: ");
