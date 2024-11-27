@@ -62,6 +62,7 @@ app.post('/upload-audio', upload.single('file'), async (req, res) => {
     }
 });
 //--------------------------Code for speech > 1 min
+/*
  try {
         // Use longRunningRecognize for longer audio files
         const [operation] = await speechClient.longRunningRecognize(request);
@@ -85,10 +86,9 @@ app.post('/upload-audio', upload.single('file'), async (req, res) => {
         res.status(500).json({ error: 'Error processing audio file', details: err.message });
     }
 
-
+*/
 
 //--------------------------Code for speech < 1min 
-/*
     speechClient.recognize(request)
         .then(response => {
             const transcript = response[0].results
@@ -105,7 +105,6 @@ app.post('/upload-audio', upload.single('file'), async (req, res) => {
             console.error("Error during speech recognition:", err);
             res.status(500).json({ error: 'Error processing audio file', details: err });
         });
-*/
 });
 
 // Handle saving all answers
