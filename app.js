@@ -125,10 +125,21 @@ for (let i = 1; i < 5; i++) {
         console.error('Error saving answers:', error);
         alert('Failed to save answers.');
     });
+//starting it again, emptying input fields
+document.getElementById("email-input").value = "";
+for (let i = 1; i < 5; i++) {
+    document.getElementById(`result-editable-${i}`).value = "No recording made";
+    document.getElementById(`result-editable-${i}`).classList.remove("show-element");
+    document.getElementById(`result-editable-${i}`).classList.add("hidden-field");
+}
+
 }
 }
 
 function clearAnswer(questionNumber) {
-    const resultElement = document.getElementById(`result-${questionNumber}`);
+   /* const resultElement = document.getElementById(`result-${questionNumber}`);
     resultElement.innerText = ''; // Clear the result for the specified question
+    */
+   const resultElement = document.getElementById(`result-editable-${questionNumber}`);
+    resultElement.value = "";
 }
