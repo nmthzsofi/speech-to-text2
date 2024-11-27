@@ -65,7 +65,8 @@ function sendToServer(audioBlob, questionNumber) {
         const transcript = data.transcript || 'No transcript available';
         console.log("Data to be output: ", transcript);
         collectedAnswers[questionNumber] = transcript;
-         document.getElementById(`result-editable-${questionNumber}`).classList.remove("hidden-element");
+         document.getElementById(`result-editable-${questionNumber}`).classList.remove("hidden-field");
+        document.getElementById(`result-editable-${questionNumber}`).classList.add("show-element");
          document.getElementById(`result-editable-${questionNumber}`).value = transcript;
     })
     .catch(error => {
