@@ -131,7 +131,7 @@ console.log("Email adress: ", req.body.email);
     
 //TRYING HUBSPORT CONNECTION
 console.log("--------------------------------------Data to be sent: ");
-console.log("Not important now");
+console.log(contactData);
 console.log("--------------------------------------");
 console.log("Stop 2: creating dataset");
 
