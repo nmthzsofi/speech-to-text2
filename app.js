@@ -64,9 +64,9 @@ function sendToServer(audioBlob, questionNumber) {
     .then(data => {
         const transcript = data.transcript || 'No transcript available';
         console.log("Data to be output: ", transcript);
-        collectedAnswers[questionNumber] = transcript;
+      //  collectedAnswers[questionNumber] = transcript;
          document.getElementById(`result-editable-${questionNumber}`).classList.remove("hidden-field");
-        document.getElementById(`result-editable-${questionNumber}`).classList.add("show-element");
+         document.getElementById(`result-editable-${questionNumber}`).classList.add("show-element");
          document.getElementById(`result-editable-${questionNumber}`).value = transcript;
     })
     .catch(error => {
@@ -100,7 +100,11 @@ function saveAllAnswers() {
 
     
 } else {
-
+//getting answers from input fields
+for (let i = 1; i < 5; i++) {
+    collectedAnswers[i] = document.getElementById(`result-editable-${questionNumber}`).value;
+}
+//
     
     fetch('/save-all-answers', {
         method: 'POST',
