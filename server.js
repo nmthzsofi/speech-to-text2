@@ -120,6 +120,8 @@ console.log("Email adress: ", req.body.email);
             "email": req.body.email, // Include the email or any unique identifier
         },
     };
+
+
     console.log("Stop 1: creating package for Hubspot");
     // Loop through the answers object and populate the contactData properties
     for (const [questionNumber, answer] of Object.entries(answers)) {
@@ -137,7 +139,7 @@ console.log("Stop 2: creating dataset");
 
 hubspotClient.crm.contacts.basicApi.create(contactData)
   .then(response => {
-    console.log('Contact created:', response.body);
+    console.log('Contact created:', response);
   })
   .catch(error => {
     console.error('Error creating contact:', error);
