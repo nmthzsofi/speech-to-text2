@@ -135,14 +135,7 @@ console.log("Not important now");
 console.log("--------------------------------------");
 console.log("Stop 2: creating dataset");
 
-hubspotClient.crm.contacts.basicApi.create({
-  properties: {
-    email: "example@hubspot.com",
-    question_1: "Jane",
-    question_2: "Doe",
-    question_3: "(555) 555-5555"
-  }
-})
+hubspotClient.crm.contacts.basicApi.create(contactData)
   .then(response => {
     console.log('Contact created:', response.body);
   })
