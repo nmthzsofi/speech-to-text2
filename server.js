@@ -126,7 +126,7 @@ console.log("Email adress: ", req.body.email);
         // Dynamically add the question and answer as key-value pairs in the properties object
         console.log("Question: ", questionNumber);
         console.log("Answer: ", answer);
-        contactData.properties[`Question ${questionNumber}`] = answer;
+        contactData.properties[`question_${questionNumber}`] = answer;
     }
     
 //TRYING HUBSPORT CONNECTION
