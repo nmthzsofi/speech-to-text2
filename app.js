@@ -102,7 +102,7 @@ function saveAllAnswers() {
 } else {
 //getting answers from input fields
 for (let i = 1; i < 5; i++) {
-    collectedAnswers[i] = document.getElementById(`result-editable-${questionNumber}`).value;
+    collectedAnswers[i] = document.getElementById(`result-editable-${i}`).value;
 }
 //
     
