@@ -117,7 +117,7 @@ console.log("Email adress: ", req.body.email);
 // Dynamically populate the properties for contactData
     const contactData = {
         properties: {
-            "email": req.body.email, // Include the email or any unique identifier
+            email: req.body.email, // Include the email or any unique identifier
         },
     };
 
