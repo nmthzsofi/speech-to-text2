@@ -117,7 +117,7 @@ console.log("Email adress: ", req.body.email);
 // Dynamically populate the properties for contactData
     const contactData = {
         properties: {
-            email: req.body.email, // Include the email or any unique identifier
+            "email": req.body.email, // Include the email or any unique identifier
         },
     };
     console.log("Stop 1: creating package for Hubspot");
@@ -127,14 +127,22 @@ console.log("Email adress: ", req.body.email);
         console.log("Question: ", questionNumber);
         console.log("Answer: ", answer);
         contactData.properties[`question_${questionNumber}`] = answer;
-    }
+    
     
 //TRYING HUBSPORT CONNECTION
 console.log("--------------------------------------Data to be sent: ");
-console.log(contactData);
+console.log("Not important now");
 console.log("--------------------------------------");
 console.log("Stop 2: creating dataset");
-hubspotClient.crm.contacts.basicApi.create(contactData)
+
+hubspotClient.crm.contacts.basicApi.create({
+  properties: {
+    email: "example@hubspot.com",
+    question_1: "Jane",
+    question_2: "Doe",
+    question_3: "(555) 555-5555"
+  }
+})
   .then(response => {
     console.log('Contact created:', response.body);
   })
