@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const { SpeechClient } = require('@google-cloud/speech');
+const hubSpot = require ('@hubspot/api-client');
 const fs = require('fs');
 const path = require('path');
 
@@ -18,9 +19,20 @@ const speechClient = new SpeechClient({
     credentials
 });
 
+//initialize hubspot connection
+
+const hubspotClient = new hubSpot.Client({
+    accessToken: process.env.HUBSPOT_TOKEN,
+});
+
+
+
 // Handle audio file upload and transcription
-app.post('/upload-audio', upload.single('file'), (req, res) => {
+app.post('/upload-audio', upload.single('file'), async (req, res) => {
+
+
     console.log("First step: communicate");
+
     const filePath = req.file.path;
 
     const audio = { content: fs.readFileSync(filePath).toString('base64') };
@@ -49,9 +61,34 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
         console.error('Path is neither a file nor a directory:', filePath);
     }
 });
+//--------------------------Code for speech > 1 min
+/*
+ try {
+        // Use longRunningRecognize for longer audio files
+        const [operation] = await speechClient.longRunningRecognize(request);
+        console.log("Operation started for long audio transcription.");
 
-    
+        // Wait for the transcription operation to complete
+        const [response] = await operation.promise();
+        console.log("Operation completed. Processing results...");
 
+        // Process the transcription results
+        const transcript = response.results
+            .map(result => result.alternatives[0].transcript)
+            .join('\n');
+        console.log("Transcript: ", transcript);
+
+        // Send the transcript back to the client
+        res.json({ transcript });
+
+    } catch (err) {
+        console.error("Error during longRunningRecognize:", err);
+        res.status(500).json({ error: 'Error processing audio file', details: err.message });
+    }
+
+*/
+
+//--------------------------Code for speech < 1min 
     speechClient.recognize(request)
         .then(response => {
             const transcript = response[0].results
@@ -72,21 +109,56 @@ app.post('/upload-audio', upload.single('file'), (req, res) => {
 
 // Handle saving all answers
 app.post('/save-all-answers', (req, res) => {
+
+console.log("Starting Hubspot proces--------------------");
+console.log("Email adress: ", req.body.email);
     const answers = req.body.answers;
-    const fileName = `session_${Date.now()}.txt`;
-    const outputPath = path.join(__dirname, 'transcripts', fileName);
 
-    let fileContent = '';
-    for (const [question, answer] of Object.entries(answers)) {
-        fileContent += `Question ${question}:\n${answer}\n\n`;
+// Dynamically populate the properties for contactData
+    const contactData = {
+        properties: {
+            email: req.body.email, // Include the email or any unique identifier
+        },
+    };
+
+
+    console.log("Stop 1: creating package for Hubspot");
+    // Loop through the answers object and populate the contactData properties
+    for (const [questionNumber, answer] of Object.entries(answers)) {
+        // Dynamically add the question and answer as key-value pairs in the properties object
+        console.log("Question: ", questionNumber);
+        console.log("Answer: ", answer);
+        contactData.properties[`question_${questionNumber}`] = answer;
     }
+    
+//TRYING HUBSPORT CONNECTION
+console.log("--------------------------------------Data to be sent: ");
+console.log(contactData);
+console.log("--------------------------------------");
+console.log("Stop 2: creating dataset");
 
-    fs.writeFile(outputPath, fileContent, err => {
+hubspotClient.crm.contacts.basicApi.create(contactData)
+  .then(response => {
+    console.log('Contact created:', response);
+  })
+  .catch(error => {
+    console.error('Error creating contact:', error);
+  });
+
+console.log("Stop 3: Sending file back");
+
+
+res.json({ file: 'Succeeded'});
+
+//----------
+    /*fs.writeFile(outputPath, fileContent, err => {
         if (err) {
             return res.status(500).json({ error: 'Error saving file' });
         }
         res.json({ file: fileName });
-    });
+    });*/
+    
+
 });
 
 console.log("starting server...");

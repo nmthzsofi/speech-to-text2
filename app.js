@@ -64,8 +64,10 @@ function sendToServer(audioBlob, questionNumber) {
     .then(data => {
         const transcript = data.transcript || 'No transcript available';
         console.log("Data to be output: ", transcript);
-        collectedAnswers[questionNumber] = transcript;
-        document.getElementById(`result-${questionNumber}`).innerText = transcript;
+      //  collectedAnswers[questionNumber] = transcript;
+         document.getElementById(`result-editable-${questionNumber}`).classList.remove("hidden-field");
+         document.getElementById(`result-editable-${questionNumber}`).classList.add("show-element");
+         document.getElementById(`result-editable-${questionNumber}`).value = transcript;
     })
     .catch(error => {
         console.error('Error uploading file:', error);
@@ -86,12 +88,33 @@ function stopRecording() {
 
 // Save all answers
 function saveAllAnswers() {
+    //control for email address
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("email-input").value)) {
+    alert('Invalid email format!');
+    //scrool back to view
+         document.getElementById("email-input").scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //Add focus to the email field
+       document.getElementById("email-input").focus();
+
+    return res.status(400).json({ error: 'Invalid email format' });
+
+    
+} else {
+//getting answers from input fields
+for (let i = 1; i < 5; i++) {
+    collectedAnswers[i] = document.getElementById(`result-editable-${i}`).value;
+}
+//
+    
     fetch('/save-all-answers', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ answers: collectedAnswers })
+        body: JSON.stringify({ 
+            email: document.getElementById("email-input").value,
+            answers: collectedAnswers 
+        })
     })
     .then(response => response.json())
     .then(data => {
@@ -102,8 +125,21 @@ function saveAllAnswers() {
         console.error('Error saving answers:', error);
         alert('Failed to save answers.');
     });
+//starting it again, emptying input fields
+document.getElementById("email-input").value = "";
+for (let i = 1; i < 5; i++) {
+    document.getElementById(`result-editable-${i}`).value = "No recording made";
+    document.getElementById(`result-editable-${i}`).classList.remove("show-element");
+    document.getElementById(`result-editable-${i}`).classList.add("hidden-field");
 }
+
+}
+}
+
 function clearAnswer(questionNumber) {
-    const resultElement = document.getElementById(`result-${questionNumber}`);
+   /* const resultElement = document.getElementById(`result-${questionNumber}`);
     resultElement.innerText = ''; // Clear the result for the specified question
+    */
+   const resultElement = document.getElementById(`result-editable-${questionNumber}`);
+    resultElement.value = "";
 }
