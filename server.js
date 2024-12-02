@@ -102,7 +102,7 @@ app.post('/upload-audio', upload.single('file'), async (req, res) => {
 */
 
 //--------------------------Code for speech > 1 min
-/*console.log("CASE: LONG RUNNING SPEECH");
+console.log("CASE: LONG RUNNING SPEECH");
     // Finding proper bucket
     const bucketName = 'speech-to-text-client-storage';
 
@@ -117,6 +117,7 @@ app.post('/upload-audio', upload.single('file'), async (req, res) => {
     //Verify that it has been uploaded
     console.log(`${filePath} uploaded to ${bucketName}`);
 
+/*
 //REFERRING TO ITEM IN BUCKET
 const audio = { uri: `gs://${bucketName}/${fileName}` };
 const request = {
@@ -128,6 +129,7 @@ const request = {
         },
     };
 
+console.log("Request is:", request);
 
     
 //if the code fails, send back the error.
