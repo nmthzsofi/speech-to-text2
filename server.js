@@ -119,6 +119,17 @@ console.log("CASE: LONG RUNNING SPEECH");
 
 //REFERRING TO ITEM IN BUCKET
 const audio = { uri: `gs://${bucketName}/${fileName}` };
+const request = {
+        audio: audio,
+        config: {
+            encoding: 'WEBM_OPUS',
+            sampleRateHertz: 48000,
+            languageCode: 'en-US',
+        },
+    };
+
+
+    
 //if the code fails, send back the error.
 try {
 
