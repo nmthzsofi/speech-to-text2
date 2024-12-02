@@ -117,6 +117,8 @@ console.log("CASE: LONG RUNNING SPEECH");
     //Verify that it has been uploaded
     console.log(`${filePath} uploaded to ${bucketName}`);
 
+//REFERRING TO ITEM IN BUCKET
+const audio = { uri: `gs://${bucketName}/${fileName}` };
 //if the code fails, send back the error.
 try {
 
