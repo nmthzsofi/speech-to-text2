@@ -131,9 +131,9 @@ const request = {
 
 console.log("Request is:", request);
 
-/*
+
 //if the code fails, send back the error.
-try {
+//try {
 
         // Use longRunningRecognize for longer audio files
         const [operation] = await speechClient.longRunningRecognize(request);
@@ -143,7 +143,7 @@ try {
         console.log("Transcription started. Processing results...");
         const [response] = await operation.promise();
         console.log("Operation completed.");
-
+/*
         // Process the transcription results
         const transcript = response.results
             .map(result => result.alternatives[0].transcript)
