@@ -102,7 +102,7 @@ app.post('/upload-audio', upload.single('file'), async (req, res) => {
 */
 
 //--------------------------Code for speech > 1 min
-console.log("CASE: LONG RUNNING SPEECH");
+/*console.log("CASE: LONG RUNNING SPEECH");
     // Finding proper bucket
     const bucketName = 'speech-to-text-client-storage';
 
@@ -160,6 +160,7 @@ try {
         console.error("Error during longRunningRecognize:", err);
         res.status(500).json({ error: 'Error processing audio file', details: err.message });
     }
+    */
 });
 
 // Handle saving all answers
