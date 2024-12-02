@@ -143,7 +143,7 @@ console.log("Request is:", request);
         console.log("Transcription started. Processing results...");
         const [response] = await operation.promise();
         console.log("Operation completed.");
-/*
+
         // Process the transcription results
         const transcript = response.results
             .map(result => result.alternatives[0].transcript)
@@ -162,7 +162,7 @@ console.log("Request is:", request);
         console.error("Error during longRunningRecognize:", err);
         res.status(500).json({ error: 'Error processing audio file', details: err.message });
     }
-    */
+    
 });
 
 // Handle saving all answers
