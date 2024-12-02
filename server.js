@@ -142,9 +142,13 @@ console.log("Request is:", request);
         // Wait for the transcription operation to complete. The code will not proceed as long as the transcription has been finished
         console.log("Transcription started. Processing results...");
         const [response] = await operation.promise();
-        console.log("Operation completed.");
+        console.log("Operation completed: ", response);
 
         // Process the transcription results
+        if (!response.results || response.results.length === 0) {
+            console.error("No transcription results found.");
+            return res.status(400).json({ error: 'No transcription results found' });
+            }
         const transcript = response.results
             .map(result => result.alternatives[0].transcript)
             .join('\n');
