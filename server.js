@@ -162,12 +162,6 @@ try {
         res.status(500).json({ error: 'Error processing audio file', details: err.message });
     }
 });
-    } catch (err) {
-        console.error("Error during longRunningRecognize:", err);
-        res.status(500).json({ error: 'Error processing audio file', details: err.message });
-    }
-    
-});
 
 // Handle saving all answers
 app.post('/save-all-answers', (req, res) => {
