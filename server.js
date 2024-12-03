@@ -133,7 +133,7 @@ console.log("Request is:", request);
 
 
 //if the code fails, send back the error.
-//try {
+try {
 
         // Use longRunningRecognize for longer audio files
         const [operation] = await speechClient.longRunningRecognize(request);
