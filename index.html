@@ -31,51 +31,56 @@
             </p>
         </div>   
 
-        <div id="email-input-container" class="question-container">
-            <p>Please insert your e-mail here:</p>
-            <input id="email-input" type="email" pattern=".+@example\.com" size="30" required />
-        </div>
-
         <div id="question-1" class="question-container">
-            <h1>Question 1:</h1>
-            <p>Why did you reject the offer?</p>
+            <h1>Section 1: about the student & uni application journey (3 minutes)</h1>
+            <p>Country of origin, age, high school type, major of interest <br>
+                Which other universities had you applied to? <br>
+                Which university did you end up choosing? Why? <br>
+                </p>
             <button onclick="startRecording(1)">Start recording</button>
             <button onclick="stopRecording()">End recording</button>
             <button onclick="clearAnswer(1)">Clear</button>
             <p id="result-1"></p> 
-            <input id="result-editable-1" type="text" class="hidden-field" value="Not started answering">
         </div>  
 
         <div id="question-2" class="question-container">
-            <h1>Question 2:</h1>
-            <p>Whnere else did you apply?</p>
+            <h1>Section 2: Our application process (8 minutes)</h1>
+            <p>How did you first hear about Forward College? <br>
+                What was your first impression of Forward College? <br>
+                What motivated you to apply? <br>
+                Feedback about our application process, what did you enjoy, what could have been improved?<br>
+                </p>
             <button onclick="startRecording(2)">Start recording</button>
             <button onclick="stopRecording()">End recording</button>
             <button onclick="clearAnswer(2)">Clear</button>
             <p id="result-2"></p> 
-            <input id="result-editable-2" type="text" class="hidden-field" value="Not started answering">
         </div> 
 
         <div id="question-3" class="question-container">
-            <h1>Question 3:</h1>
-            <p>When did you graduate?</p>
+            <h1>Section 3: Decision-making process (6 minutes)</h1>
+            <p>What factors played the most significant role in your decision not to join us? </p>
             <button onclick="startRecording(3)">Start recording</button>
             <button onclick="stopRecording()">End recording</button>
             <button onclick="clearAnswer(3)">Clear</button>
             <p id="result-3"></p> 
-            <input id="result-editable-3" type="text" class="hidden-field" value="Not started answering">
         </div> 
 
         <div id="question-4" class="question-container">
-            <h1>Question 4:</h1>
-            <p>Where are you from?</p>
+            <h1>Section 4: Reflection and Feedback (2 minutes)</h1>
+            <p>In retrospect, is there anything Forward College could have done differently to change your decision?<br>
+                Would you recommend Forward College to a friend?<br>
+                </p>
             <button onclick="startRecording(4)">Start recording</button>
             <button onclick="stopRecording()">End recording</button>
             <button onclick="clearAnswer(4)">Clear</button>
             <p id="result-4"></p> 
-            <input id="result-editable-4" type="text" class="hidden-field" value="Not started answering">
-            <div id="submit-div"><button id="submit-btn" onclick="saveAllAnswers()">Submit</button></div>
         </div> 
+        <div class="question-container">
+            <p> 
+                Thank you for your time and valuable feedback. Is there anything else you’d like to share with us about your experience or decision-making process?
+            </p>
+            <div id="submit-div"><button id="submit-btn" onclick="saveAllAnswers()">Submit</button></div>
+       </div>
 
 
     </div>
