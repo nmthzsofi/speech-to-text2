@@ -208,8 +208,17 @@ console.log("--------------------------------------");
 console.log("Stop 2: creating dataset");
 
 //----------------------------------------------------------------HUBSPOT API UPDATE
-//findAndUpdateContact(email, contactData);
-   res.json({ file: 'Succeeded'});
+try {
+        // Call the findAndUpdateContact function
+        await findAndUpdateContact(email, contactData);
+
+        console.log("HubSpot process completed successfully.");
+        res.json({ message: 'Contact updated successfully!' });
+    } catch (error) {
+        console.error("Error updating HubSpot contact:", error);
+        res.status(500).json({ error: 'Failed to update contact', details: error.message });
+    }
+});
 
 
 
