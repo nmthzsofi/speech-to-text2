@@ -208,7 +208,7 @@ console.log("--------------------------------------");
 console.log("Stop 2: creating dataset");
 
 //----------------------------------------------------------------HUBSPOT API UPDATE
-findAndUpdateContact(email, contactData);
+//findAndUpdateContact(email, contactData);
    res.json({ file: 'Succeeded'});
 
 
