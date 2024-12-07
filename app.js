@@ -142,4 +142,5 @@ function clearAnswer(questionNumber) {
     */
    const resultElement = document.getElementById(`result-editable-${questionNumber}`);
     resultElement.value = "";
+
 }
