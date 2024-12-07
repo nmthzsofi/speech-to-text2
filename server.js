@@ -175,16 +175,20 @@ try {
     }
 });
 
+
+
+
+
+
 // Handle saving all answers
 app.post('/save-all-answers', (req, res) => {
-
 console.log("Starting Hubspot proces--------------------");
 console.log("Email adress: ", req.body.email);
     const answers = req.body.answers;
 
-// Dynamically populate the properties for contactData
+//Dynamically populate the properties for contactData
     const contactData = {
-        properties: {},
+        properties: {email:req.body.email},
     };
 
 
