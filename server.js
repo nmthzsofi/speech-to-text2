@@ -1,16 +1,3 @@
-/*
-------------------------------------------------------------
-Hubspot communication:
-1. Create package
-2. Search for contact. 
-   --  If contact doesn't exsit -->other email?
-3. Find contact and update values
-4. Handle errors 
-5. Handle submission
---------------------------------------------------------------
-
-
-*/
 
 //Necessary calls of API functions
 
@@ -23,27 +10,33 @@ const fs = require('fs');
 const path = require('path');
 
 //App to handle server communication
+
 const app = express();
 app.use(express.json());
 const upload = multer({ dest: 'uploads/' });
 
 // Serve static files
+
 app.use(express.static(path.join(__dirname)));
 
 // Get necessary key to access the Google speech transcription
+
 const credentials = JSON.parse(process.env.KEY);
 
 // Initialize transcriber connection
+
 const speechClient = new SpeechClient({
     credentials
 });
 
 //initialize hubspot connection
+
 const hubspotClient = new hubSpot.Client({
     accessToken: process.env.HUBSPOT_TOKEN,
 });
 
 // Initializing Google Cloud Storage for the files longer than 1 minute
+
 const storage = new Storage({ 
     credentials 
 });
@@ -181,27 +174,25 @@ try {
 
 
 // Handle saving all answers
+
 app.post('/save-all-answers', async (req, res) => {
-console.log("Starting Hubspot proces--------------------");
-console.log("Email adress: ", req.body.email);
-    const answers = req.body.answers;
 
-//Dynamically populate the properties for contactData
-    const contactData = {
-        properties: {email:req.body.email},
+
+const answers = req.body.answers;
+const contactData = {
+        properties: {
+           email: req.body.email,
+      },
     };
-
-
-    console.log("Stop 1: creating package for Hubspot");
-    // Loop through the answers object and populate the contactData properties
+   
+console.log("Stop 1: creating package for Hubspot");
     for (const [questionNumber, answer] of Object.entries(answers)) {
-        // Dynamically add the question and answer as key-value pairs in the properties object
         console.log("Question: ", questionNumber);
         console.log("Answer: ", answer);
         contactData.properties[`question_${questionNumber}`] = answer;
     }
     
-//TRYING HUBSPORT CONNECTION
+//Package to be sent to HubSpot
 console.log("--------------------------------------Data to be sent: ");
 console.log(contactData);
 console.log("--------------------------------------");
@@ -209,7 +200,6 @@ console.log("Stop 2: creating dataset");
 
 //----------------------------------------------------------------HUBSPOT API UPDATE
 try {
-        // Call the findAndUpdateContact function
         await findAndUpdateContact(req.body.email, contactData);
 
         console.log("HubSpot process completed successfully.");
@@ -219,11 +209,6 @@ try {
         res.status(500).json({ error: 'Failed to update contact', details: error.message });
     }
 });
-
-
-
-
-
 /*
 -------------------------------------------------------------------HUBSPOT API CREATION
 hubspotClient.crm.contacts.basicApi.create(contactData)
@@ -239,19 +224,8 @@ console.log("Stop 3: Sending file back");
 
 res.json({ file: 'Succeeded'});
 */
-//----------
-    /*fs.writeFile(outputPath, fileContent, err => {
-        if (err) {
-            return res.status(500).json({ error: 'Error saving file' });
-        }
-        res.json({ file: fileName });
-    });*/
-    
-
-});
 
 async function findAndUpdateContact(email, updateData) {
-console.log("Stop 3: Searching for contact...");
 try {
         // Step 1: Search for the contact by email
         const searchResponse = await hubspotClient.crm.contacts.searchApi.doSearch({
@@ -268,19 +242,14 @@ try {
             ],
             properties: ['email'], // Specify properties to retrieve
         });
-
-        console.log("Stop 4: contact received...");
         if (searchResponse.results.length > 0) {
             const contactId = searchResponse.results[0].id;
-
-        console.log("Stop 5: Update starting..");
-        const updateResponse = await hubspotClient.crm.contacts.basicApi.update(contactId, updateData);
-
-        console.log('Contact updated successfully:', updateResponse);
-
+            const updateResponse = await hubspotClient.crm.contacts.basicApi.update(contactId, updateData);
+            console.log('Contact updated successfully:', updateResponse);
         } else {
             console.log('Contact not found with email:', email);
         }
+   
     } catch (error) {
         console.error('Error finding or updating contact:', error.message);
     }
