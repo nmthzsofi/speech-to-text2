@@ -1,4 +1,16 @@
-//Switching between recognize and longRunningRecognize options
+/*
+------------------------------------------------------------
+Hubspot communication:
+1. Create package
+2. Search for contact. 
+   --  If contact doesn't exsit -->other email?
+3. Find contact and update values
+4. Handle errors 
+5. Handle submission
+--------------------------------------------------------------
+
+
+*/
 
 //Necessary calls of API functions
 
@@ -193,6 +205,48 @@ console.log(contactData);
 console.log("--------------------------------------");
 console.log("Stop 2: creating dataset");
 
+//----------------------------------------------------------------HUBSPOT API UPDATE
+console.log("Stop 3: Searching for contact...");
+try {
+        // Step 1: Search for the contact by email
+        const searchResponse = await hubspotClient.crm.contacts.searchApi.doSearch({
+            filterGroups: [
+                {
+                    filters: [
+                        {
+                            propertyName: 'email',
+                            operator: 'EQ',
+                            value: email,
+                        },
+                    ],
+                },
+            ],
+            properties: ['email'], // Specify properties to retrieve
+        });
+
+        console.log("Stop 4: contact received...");
+        if (searchResponse.results.length > 0) {
+            const contactId = searchResponse.results[0].id;
+
+        console.log("Stop 5: Update starting..");
+        const updateResponse = await hubspotClient.crm.contacts.basicApi.update(contactId, updateData);
+
+        console.log('Contact updated successfully:', updateResponse);
+
+        } else {
+            console.log('Contact not found with email:', email);
+        }
+    } catch (error) {
+        console.error('Error finding or updating contact:', error.message);
+    }
+}
+
+
+
+
+
+/*
+-------------------------------------------------------------------HUBSPOT API CREATION
 hubspotClient.crm.contacts.basicApi.create(contactData)
   .then(response => {
     console.log('Contact created:', response);
@@ -205,7 +259,7 @@ console.log("Stop 3: Sending file back");
 
 
 res.json({ file: 'Succeeded'});
-
+*/
 //----------
     /*fs.writeFile(outputPath, fileContent, err => {
         if (err) {
