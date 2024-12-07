@@ -184,9 +184,7 @@ console.log("Email adress: ", req.body.email);
 
 // Dynamically populate the properties for contactData
     const contactData = {
-        properties: {
-            email: req.body.email, // Include the email or any unique identifier
-        },
+        properties: {},
     };
 
 
@@ -206,6 +204,40 @@ console.log("--------------------------------------");
 console.log("Stop 2: creating dataset");
 
 //----------------------------------------------------------------HUBSPOT API UPDATE
+findAndUpdateContact(email, contactData);
+   res.json({ file: 'Succeeded'});
+
+
+
+
+
+/*
+-------------------------------------------------------------------HUBSPOT API CREATION
+hubspotClient.crm.contacts.basicApi.create(contactData)
+  .then(response => {
+    console.log('Contact created:', response);
+  })
+  .catch(error => {
+    console.error('Error creating contact:', error);
+  });
+
+console.log("Stop 3: Sending file back");
+
+
+res.json({ file: 'Succeeded'});
+*/
+//----------
+    /*fs.writeFile(outputPath, fileContent, err => {
+        if (err) {
+            return res.status(500).json({ error: 'Error saving file' });
+        }
+        res.json({ file: fileName });
+    });*/
+    
+
+});
+
+async function findAndUpdateContact(email, updateData) {
 console.log("Stop 3: Searching for contact...");
 try {
         // Step 1: Search for the contact by email
@@ -239,38 +271,9 @@ try {
     } catch (error) {
         console.error('Error finding or updating contact:', error.message);
     }
-
-   res.json({ file: 'Succeeded'});
-
+}
 
 
-
-
-/*
--------------------------------------------------------------------HUBSPOT API CREATION
-hubspotClient.crm.contacts.basicApi.create(contactData)
-  .then(response => {
-    console.log('Contact created:', response);
-  })
-  .catch(error => {
-    console.error('Error creating contact:', error);
-  });
-
-console.log("Stop 3: Sending file back");
-
-
-res.json({ file: 'Succeeded'});
-*/
-//----------
-    /*fs.writeFile(outputPath, fileContent, err => {
-        if (err) {
-            return res.status(500).json({ error: 'Error saving file' });
-        }
-        res.json({ file: fileName });
-    });*/
-    
-
-});
 
 console.log("starting server...");
 const port = process.env.PORT || 3000;
