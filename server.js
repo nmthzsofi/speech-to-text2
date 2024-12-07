@@ -181,7 +181,7 @@ try {
 
 
 // Handle saving all answers
-app.post('/save-all-answers', (req, res) => {
+app.post('/save-all-answers', async (req, res) => {
 console.log("Starting Hubspot proces--------------------");
 console.log("Email adress: ", req.body.email);
     const answers = req.body.answers;
@@ -210,7 +210,7 @@ console.log("Stop 2: creating dataset");
 //----------------------------------------------------------------HUBSPOT API UPDATE
 try {
         // Call the findAndUpdateContact function
-        await findAndUpdateContact(email, contactData);
+        await findAndUpdateContact(req.body.email, contactData);
 
         console.log("HubSpot process completed successfully.");
         res.json({ message: 'Contact updated successfully!' });
