@@ -1,6 +1,7 @@
 let mediaRecorder;
 let audioChunks = [];
 let collectedAnswers = {};
+let activeStream = null;
 
 //Show current question div
 function showQuestion(questionNumber) {
@@ -18,18 +19,15 @@ function showQuestion(questionNumber) {
 }
 // Start recording for a specific question
 function startRecording(questionNumber) {
-    const constraints = {
-        audio: {
-            sampleRate: 48000,
-            echoCancellation: true
-        }
-    };
-
-    navigator.mediaDevices.getUserMedia(constraints)
+    navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
-            mediaRecorder = new MediaRecorder(stream);
+            activeStream = stream;
+            const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+                ? 'audio/webm;codecs=opus'
+                : 'audio/webm';
+            mediaRecorder = new MediaRecorder(stream, { mimeType });
             mediaRecorder.start();
-            console.log('Recording started');
+            console.log('Recording started, mimeType:', mimeType);
             audioChunks = [];
 
             mediaRecorder.addEventListener("dataavailable", event => {
@@ -37,9 +35,10 @@ function startRecording(questionNumber) {
             });
 
             mediaRecorder.addEventListener("stop", () => {
-                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-
-                // Send recording to the server
+                const audioBlob = new Blob(audioChunks, { type: mimeType });
+                console.log('Audio blob size:', audioBlob.size, 'type:', audioBlob.type);
+                activeStream.getTracks().forEach(track => track.stop());
+                activeStream = null;
                 sendToServer(audioBlob, questionNumber);
             });
         })
