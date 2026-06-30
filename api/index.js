@@ -2,7 +2,6 @@ const express = require('express');
 const multer = require('multer');
 const { SpeechClient } = require('@google-cloud/speech');
 const fs = require('fs');
-const path = require('path');
 
 const app = express();
 app.use(express.json());
@@ -16,8 +15,6 @@ if (!process.env.GOOGLE_CREDENTIALS) {
 const speechClient = new SpeechClient({
     credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS)
 });
-
-app.use(express.static(path.join(__dirname, '..')));
 
 app.post('/upload-audio', upload.single('file'), (req, res) => {
     const audio = { content: req.file.buffer.toString('base64') };
